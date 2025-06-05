@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { FaEdit, FaWindowClose } from 'react-icons/fa';
-
 import Form from './Form';
+import Tarefas from './Tarefas';
 
 import './Main.css'
 
@@ -15,7 +14,7 @@ export default class Main extends Component {
   componentDidMount() {
     const tarefas = JSON.parse(localStorage.getItem('tarefas'));
 
-    if(!tarefas) return;
+    if (!tarefas) return;
 
     this.setState({ tarefas });
   }
@@ -23,7 +22,7 @@ export default class Main extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { tarefas } = this.state;
 
-    if(tarefas === prevState.tarefas) return;
+    if (tarefas === prevState.tarefas) return;
 
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
   }
@@ -90,24 +89,12 @@ export default class Main extends Component {
           novaTarefa={novaTarefa}
         />
 
-        <ul className="tarefas">
-          {tarefas.map((tarefa, index) => (
-            <li key={tarefa}>
-              {tarefa}
-              <span>
-                <FaEdit
-                  onClick={(e) => this.handleEdit(e, index)}
-                  className="edit"
-                />
+        <Tarefas
+          tarefas={tarefas}
+          handleEdit={this.handleEdit}
+          handleDelete={this.handleDelete}
+        />
 
-                <FaWindowClose
-                  onClick={(e) => this.handleDelete(e, index)}
-                  className="delete"
-                />
-              </span>
-            </li>
-          ))}
-        </ul>
       </div>
     );
   }
